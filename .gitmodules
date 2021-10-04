@@ -4,3 +4,6 @@
 [submodule "libtcod"]
 	path = libtcod
 	url = https://github.com/libtcod/libtcod.git
+[submodule "vendor/ppg-yaml"]
+	path = vendor/ppg-yaml
+	url = https://github.com/dAmihl/ppg-yaml

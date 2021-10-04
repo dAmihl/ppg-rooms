@@ -6,8 +6,14 @@ if(NOT DEFINED CMAKE_TOOLCHAIN_FILE)
         CACHE STRING "Vcpkg toolchain file")
 endif()
 
+
+set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} /MT")
+set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} /MTd")
+set(CMAKE_MSVC_RUNTIME_LIBRARY "MultiThreaded$<$<CONFIG:Debug>:Debug>")
+
+
 project(
-    libtcod-vcpkg-template  # Project name, change this as needed.
+    ppg-rooms  # Project name, change this as needed.
     LANGUAGES C CXX
 )
 
@@ -38,5 +44,14 @@ endif()
 set(BUILD_SHARED_LIBS ON)  # Builds libtcod has a shared library.
 add_subdirectory("libtcod")  # This will error if you haven't initialized libtcod the submodule!
 
+add_subdirectory("vendor/ppg-yaml")
+
+set_target_properties(
+    ppg-rooms PROPERTIES
+    VS_DEBUGGER_WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}/src")
+
+set_property(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR} PROPERTY VS_STARTUP_PROJECT ppg-rooms)
+
 find_package(SDL2 CONFIG REQUIRED)
-target_link_libraries(${PROJECT_NAME} PRIVATE SDL2::SDL2 SDL2::SDL2main libtcod::libtcod)
+target_link_libraries(${PROJECT_NAME} PRIVATE SDL2::SDL2 SDL2::SDL2main libtcod::libtcod ppg-yaml)
+target_include_directories(${PROJECT_NAME} PRIVATE "vendor/ppg-yaml/src")
