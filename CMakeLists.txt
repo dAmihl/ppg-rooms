@@ -42,9 +42,9 @@ else()
 endif()
 
 set(BUILD_SHARED_LIBS ON)  # Builds libtcod has a shared library.
-add_subdirectory("libtcod")  # This will error if you haven't initialized libtcod the submodule!
+add_subdirectory("libtcod" EXCLUDE_FROM_ALL)  # This will error if you haven't initialized libtcod the submodule!
 
-add_subdirectory("vendor/ppg-yaml")
+add_subdirectory("vendor/ppg-yaml" EXCLUDE_FROM_ALL)
 
 set_target_properties(
     ppg-rooms PROPERTIES
