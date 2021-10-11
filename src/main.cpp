@@ -2,6 +2,7 @@
 #include <SDL.h>
 #include <libtcod.h>
 #include "Yaml2Puzzle.h"
+#include "Room.h"
 
 #include <cstdlib>
 
@@ -22,12 +23,20 @@ int main(int argc, char** argv) {
   Yaml2Puzzle y2p;
 
   auto P = y2p.generatePuzzleByFile("universe1.yaml");
+  PPG::Vec<PPG::GraphNode*> rootNode = P->getGraphRepresentation();
+
+
+
+  Room r1{console};
 
   // Game loop.
   while (true) {
+    // Update
+    r1.update();
+
     // Rendering.
     TCOD_console_clear(console.get());
-    tcod::print(*console, 0, 0, "Hello World", &TCOD_white, nullptr, TCOD_BKGND_SET, TCOD_LEFT);
+    r1.draw();
     context->present(*console);
 
     // Handle input.
